@@ -12,8 +12,8 @@ public class PositionedImage {
   int posX, posY;
 
   public PositionedImage(String filename, int posX, int posY) {
-    this.posX = posX*50;
-    this.posY = posY*50;
+    this.posX = posX*50-50;
+    this.posY = posY*50-50;
     try {
       image = ImageIO.read(new File(filename));
     } catch (IOException e) {
