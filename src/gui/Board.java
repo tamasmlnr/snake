@@ -14,8 +14,7 @@ public class Board extends JComponent implements KeyListener {
     testBoxX = 300;
     testBoxY = 300;
 
-    // set the size of your draw board
-    setPreferredSize(new Dimension(720, 720));
+    setPreferredSize(new Dimension(600, 600));
     setVisible(true);
   }
 
@@ -23,9 +22,7 @@ public class Board extends JComponent implements KeyListener {
   public void paint(Graphics graphics) {
     super.paint(graphics);
     graphics.fillRect(testBoxX, testBoxY, 100, 100);
-    // here you have a 720x720 canvas
-    // you can create and draw an image using the class below e.g.
-    PositionedImage image = new PositionedImage("yourimage.png", 300, 300);
+    PositionedImage image = new PositionedImage("src/gui/snake_tile.png", 5, 5);
     image.draw(graphics);
   }
 
@@ -59,13 +56,15 @@ public class Board extends JComponent implements KeyListener {
   // But actually we can use just this one for our goals here
   @Override
   public void keyReleased(KeyEvent e) {
-    // When the up or down keys hit, we change the position of our box
     if (e.getKeyCode() == KeyEvent.VK_UP) {
       testBoxY -= 100;
-    } else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+    } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
       testBoxY += 100;
+    } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+      testBoxX -= 100;
+    } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+      testBoxX += 100;
     }
-    // and redraw to have a new picture with the new coordinates
     repaint();
   }
 }
