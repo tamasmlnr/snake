@@ -2,13 +2,13 @@ package domain;
 
 import java.util.List;
 
-public class Worm {
+public class Snake {
   private int originalX;
   private int originalY;
   private Direction direction;
   private List<Piece> pieces;
 
-  public Worm(int originalX, int originalY, Direction direction) {
+  public Snake(int originalX, int originalY, Direction direction) {
     this.originalX = originalX;
     this.originalY = originalY;
     this.direction = direction;
