@@ -31,7 +31,6 @@ public class Board extends JComponent implements KeyListener {
   public void paint(Graphics graphics) {
     super.paint(graphics);
     for (Piece piece : pieces) {
-      System.out.println(piece);
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
     }
@@ -51,7 +50,6 @@ public class Board extends JComponent implements KeyListener {
 
   @Override
   public void keyTyped(KeyEvent e) {
-
   }
 
   @Override

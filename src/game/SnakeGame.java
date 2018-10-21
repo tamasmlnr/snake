@@ -36,26 +36,86 @@ public class SnakeGame {
 
 
   public void turnUp() {
+    snake.setOriginalDirection(snake.getDirection());
+    if (snake.getDirection()!=DOWN)
     snake.setDirection(UP);
   }
 
   public void turnDown() {
+    snake.setOriginalDirection(snake.getDirection());
+    if (snake.getDirection()!=UP)
     snake.setDirection(DOWN);
   }
 
   public void turnLeft() {
+    snake.setOriginalDirection(snake.getDirection());
+    if (snake.getDirection()!=RIGHT)
     snake.setDirection(LEFT);
   }
 
   public void turnRight() {
+    snake.setOriginalDirection(snake.getDirection());
     snake.setDirection(RIGHT);
   }
 
   public void continueInDirection() {
-    Direction direction=snake.getDirection();
-    if(direction==RIGHT) snake.moveRight();
-    if(direction==LEFT) snake.moveLeft();
-    if(direction==UP) snake.moveUp();
-    if(direction==DOWN) snake.moveDown();
+    Direction direction = snake.getDirection();
+    if (direction == RIGHT) moveRight();
+    if (direction == LEFT) moveLeft();
+    if (direction == UP) moveUp();
+    if (direction == DOWN) moveDown();
+  }
+
+  public void moveLeft() {
+    shiftPieces();
+      snake.getPieces()
+          .get(0)
+          .setX(snake.getPieces()
+              .get(0)
+              .getX() - 1);
+  }
+
+  public void moveUp() {
+    shiftPieces();
+    snake.getPieces()
+        .get(0)
+        .setY(snake.getPieces()
+            .get(0)
+            .getY() - 1);
+  }
+
+  public void moveRight() {
+    shiftPieces();
+    snake.getPieces()
+        .get(0)
+        .setX(snake.getPieces()
+            .get(0)
+            .getX() + 1);
+  }
+
+
+  public void moveDown() {
+    shiftPieces();
+    snake.getPieces()
+        .get(0)
+        .setY(snake.getPieces()
+            .get(0)
+            .getY() + 1);
+  }
+
+  public void shiftPieces() {
+    for (int i = snake.getPieces()
+        .size() - 1; i > 0; i--) {
+      snake.getPieces()
+          .get(i)
+          .setX(snake.getPieces()
+              .get(i - 1)
+              .getX());
+      snake.getPieces()
+          .get(i)
+          .setY(snake.getPieces()
+              .get(i - 1)
+              .getY());
+    }
   }
 }
