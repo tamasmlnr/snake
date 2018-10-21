@@ -28,7 +28,7 @@ public class Piece {
   }
 
   public boolean runsInto(Piece piece) {
-    if (piece.getX() == this.getX() && piece.getY() == this.getY()) {
+    if (piece.getX() == this.x && piece.getY() == this.y) {
       return true;
     }
     return false;

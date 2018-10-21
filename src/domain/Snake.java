@@ -3,17 +3,15 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import static domain.Direction.RIGHT;
+
 public class Snake {
-  private int originalX;
-  private int originalY;
   private Direction direction;
   private Direction originalDirection;
   private List<SnakePiece> pieces;
 
-  public Snake(int originalX, int originalY, Direction direction) {
-    this.originalX = originalX;
-    this.originalY = originalY;
-    this.direction = direction;
+  public Snake() {
+    this.direction = RIGHT;
     pieces = new ArrayList<>();
     pieces.add(new SnakePiece(4, 1));
     pieces.add(new SnakePiece(3, 1));
@@ -21,9 +19,6 @@ public class Snake {
     pieces.add(new SnakePiece(1, 1));
   }
 
-  public int getOriginalX() {
-    return originalX;
-  }
 
   public Direction getOriginalDirection() {
     return originalDirection;
@@ -31,18 +26,6 @@ public class Snake {
 
   public void setOriginalDirection(Direction originalDirection) {
     this.originalDirection = originalDirection;
-  }
-
-  public void setOriginalX(int originalX) {
-    this.originalX = originalX;
-  }
-
-  public int getOriginalY() {
-    return originalY;
-  }
-
-  public void setOriginalY(int originalY) {
-    this.originalY = originalY;
   }
 
   public Direction getDirection() {
@@ -57,8 +40,12 @@ public class Snake {
     return pieces;
   }
 
-  public void setPieces(List<SnakePiece> pieces) {
-    this.pieces = pieces;
+  public SnakePiece getHead() {
+    return pieces.get(0);
+  }
+
+  public SnakePiece getLastPiece() {
+    return pieces.get(pieces.size() - 1);
   }
 
 }

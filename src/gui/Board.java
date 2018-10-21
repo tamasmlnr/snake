@@ -32,10 +32,15 @@ public class Board extends JComponent implements KeyListener {
     super.paint(graphics);
     for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
+      graphics.drawString("" + pieces.indexOf(piece), (piece.getX() + 1) * 50, (piece.getY() + 1) * 50);
       image.draw(graphics);
+      refreshPieces();
     }
 
+  }
 
+  public void refreshPieces() {
+    pieces = snakeGame.getGameObjects();
   }
 
   public static void main(String[] args) {
@@ -57,7 +62,6 @@ public class Board extends JComponent implements KeyListener {
 
   }
 
-  // But actually we can use just this one for our goals here
   @Override
   public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_UP) {

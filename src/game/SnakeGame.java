@@ -14,18 +14,20 @@ public class SnakeGame {
   public static final int MAX_HEIGHT = 10;
   private Snake snake;
   private List<Piece> gameObjects;
+  private Apple apple;
 
   public SnakeGame() {
-    snake = new Snake(1, 1, RIGHT);
+    snake = new Snake();
+    apple=new Apple(generateRandomCoordinate(), generateRandomCoordinate());
   }
-
-
+  
   public List<Piece> getGameObjects() {
     List<Piece> pieces = new ArrayList<>();
-    pieces.add(new Apple(generateRandomCoordinate(), generateRandomCoordinate()));
+    pieces.add(apple);
     for (SnakePiece piece : snake.getPieces()) {
       pieces.add(piece);
     }
+    gameObjects = pieces;
     return pieces;
   }
 
@@ -37,20 +39,20 @@ public class SnakeGame {
 
   public void turnUp() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection()!=DOWN)
-    snake.setDirection(UP);
+    if (snake.getDirection() != DOWN)
+      snake.setDirection(UP);
   }
 
   public void turnDown() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection()!=UP)
-    snake.setDirection(DOWN);
+    if (snake.getDirection() != UP)
+      snake.setDirection(DOWN);
   }
 
   public void turnLeft() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection()!=RIGHT)
-    snake.setDirection(LEFT);
+    if (snake.getDirection() != RIGHT)
+      snake.setDirection(LEFT);
   }
 
   public void turnRight() {
@@ -64,15 +66,53 @@ public class SnakeGame {
     if (direction == LEFT) moveLeft();
     if (direction == UP) moveUp();
     if (direction == DOWN) moveDown();
+
+    if (getApple().runsInto(snake.getHead())) {
+      grow();
+      System.out.println("should grow");
+    }
+  }
+
+  private void grow() {
+    if (snake.getDirection() == LEFT) {
+      snake.getPieces()
+          .add(new SnakePiece(snake.getLastPiece()
+              .getX() + 1, snake.getLastPiece()
+              .getY()));
+    }
+
+    if (snake.getDirection() == RIGHT) {
+      snake.getPieces()
+          .add(new SnakePiece(snake.getLastPiece()
+              .getX() - 1, snake.getLastPiece()
+              .getY()));
+    }
+
+    if (snake.getDirection() == UP) {
+      snake.getPieces()
+          .add(new SnakePiece(snake.getLastPiece()
+              .getX(), snake.getLastPiece()
+              .getY() - 1));
+    }
+
+    if (snake.getDirection() == DOWN) {
+      snake.getPieces()
+          .add(new SnakePiece(snake.getLastPiece()
+              .getX() - 1, snake.getLastPiece()
+              .getY() + 1));
+      for (SnakePiece piece : snake.getPieces()){
+        System.out.println(piece.getX()+" "+piece.getY());
+      }
+    }
   }
 
   public void moveLeft() {
     shiftPieces();
-      snake.getPieces()
-          .get(0)
-          .setX(snake.getPieces()
-              .get(0)
-              .getX() - 1);
+    snake.getPieces()
+        .get(0)
+        .setX(snake.getPieces()
+            .get(0)
+            .getX() - 1);
   }
 
   public void moveUp() {
@@ -117,5 +157,10 @@ public class SnakeGame {
               .get(i - 1)
               .getY());
     }
+
+  }
+
+  public Apple getApple() {
+    return (Apple) gameObjects.get(0);
   }
 }
