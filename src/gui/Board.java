@@ -1,29 +1,38 @@
 package gui;
 
+import domain.Apple;
+import domain.Piece;
+import game.SnakeGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board extends JComponent implements KeyListener {
 
-  int testBoxX;
-  int testBoxY;
+  private SnakeGame snakeGame;
+  private List<Piece> pieces = new ArrayList();
 
   public Board() {
-    testBoxX = 300;
-    testBoxY = 300;
-
-    setPreferredSize(new Dimension(600, 600));
+    pieces.add(new Apple(5, 5));
+    setPreferredSize(new Dimension(500, 500));
     setVisible(true);
   }
+
 
   @Override
   public void paint(Graphics graphics) {
     super.paint(graphics);
-    graphics.fillRect(testBoxX, testBoxY, 100, 100);
-    PositionedImage image = new PositionedImage("src/gui/snake_tile.png", 5, 5);
-    image.draw(graphics);
+    for (Piece piece : pieces) {
+      System.out.println(piece);
+      PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
+      image.draw(graphics);
+    }
+
+
   }
 
   public static void main(String[] args) {
@@ -57,13 +66,13 @@ public class Board extends JComponent implements KeyListener {
   @Override
   public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_UP) {
-      testBoxY -= 100;
+
     } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-      testBoxY += 100;
+
     } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-      testBoxX -= 100;
+
     } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-      testBoxX += 100;
+
     }
     repaint();
   }

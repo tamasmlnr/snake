@@ -4,6 +4,7 @@ public class Piece {
 
   private int x;
   private int y;
+  private String image;
 
   public Piece(int x, int y) {
     this.x = x;
@@ -35,6 +36,14 @@ public class Piece {
 
   public String toString() {
     return "(" + x + "," + y + ")";
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 
 }
