@@ -1,6 +1,5 @@
 package gui;
 
-import domain.Apple;
 import domain.Piece;
 import game.SnakeGame;
 
@@ -41,6 +40,7 @@ public class Board extends JComponent implements KeyListener {
         gO.draw(graphics);
       }
       refreshPieces();
+
     }
   }
 
@@ -55,7 +55,6 @@ public class Board extends JComponent implements KeyListener {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
     frame.pack();
-    frame.addKeyListener(board);
   }
 
   @Override
@@ -84,6 +83,28 @@ public class Board extends JComponent implements KeyListener {
     }
   }
 
+
+  public void buttonPressed(String button) {
+    if (button.equals("down")) {
+      snakeGame.turnDown();
+    }
+    else if (button.equals("up")) {
+      snakeGame.turnUp();
+    }
+    else if (button.equals("left")) {
+      snakeGame.turnLeft();
+    }
+    else if (button.equals("right")) {
+      snakeGame.turnRight();
+    }
+    repaint();
+    if (tempDelay > delay) {
+      timer.cancel();
+      contineInDirection();
+    }
+  }
+
+
   public void contineInDirection() {
     java.util.Timer t = new Timer();
     timer = t;
@@ -94,7 +115,7 @@ public class Board extends JComponent implements KeyListener {
         repaint();
       }
     }, delay, delay);
-    tempDelay=delay;
+    tempDelay = delay;
   }
 
   public void cancelTimer() {

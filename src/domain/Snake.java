@@ -19,7 +19,6 @@ public class Snake {
     pieces.add(new SnakePiece(1, 1));
   }
 
-
   public Direction getOriginalDirection() {
     return originalDirection;
   }

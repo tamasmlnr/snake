@@ -12,8 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static domain.Direction.*;
 
 public class SnakeGame {
-  public static final int MAX_WIDTH = 20;
-  public static final int MAX_HEIGHT = 20;
+  public static final int MAX_WIDTH = 15;
+  public static final int MAX_HEIGHT = 15;
   private Snake snake;
   private List<Piece> gameObjects;
   private Apple apple;
@@ -45,14 +45,14 @@ public class SnakeGame {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != DOWN)
       snake.setDirection(UP);
-    snake.getHead().setImage(SnakePiece.HEADUP);
+//    snake.getHead().setImage(SnakePiece.HEADUP);
   }
 
   public void turnDown() {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != UP)
       snake.setDirection(DOWN);
-    snake.getHead().setImage(SnakePiece.HEADDOWN);
+//    snake.getHead().setImage(SnakePiece.HEADDOWN);
   }
 
   public void turnLeft() {
@@ -60,14 +60,14 @@ public class SnakeGame {
     if (snake.getDirection() != RIGHT)
       snake.setDirection(LEFT);
 
-    snake.getHead().setImage(SnakePiece.HEADLEFT);
+//    snake.getHead().setImage(SnakePiece.HEADLEFT);
   }
 
   public void turnRight() {
     snake.setOriginalDirection(snake.getDirection());
     snake.setDirection(RIGHT);
 
-    snake.getHead().setImage(SnakePiece.HEADRIGHT);
+//    snake.getHead().setImage(SnakePiece.HEADRIGHT);
   }
 
   public void continueInDirection() {
@@ -155,8 +155,6 @@ public class SnakeGame {
               .getX(), snake.getLastPiece()
               .getY() - 1));
     }
-
-
   }
 
   public void moveLeft() {
@@ -211,9 +209,52 @@ public class SnakeGame {
           .setY(snake.getPieces()
               .get(i - 1)
               .getY());
-    }
+//    if (snake.getPieces().get(i).getX()!=tempX){
+//      snake.getPieces().get(i).setImage(SnakePiece.BODYHORIZONTAL);
+//    }
+//    if (snake.getPieces().get(i).getY()!=tempY){
+//        snake.getPieces().get(i).setImage(SnakePiece.BODYVERTICAL);
+//      }changeCorners();
+      }
 
   }
+
+//  private void changeCorners() {
+//    System.out.println("head" +snake.getPieces().get(0).getY()+" "+snake.getPieces().get(0).getX());
+//    System.out.println("first" +snake.getPieces().get(1).getY()+" "+snake.getPieces().get(1).getX());
+//    System.out.println("second" +snake.getPieces().get(2).getY()+" "+snake.getPieces().get(2).getX());
+//    System.out.println("____");
+//    if (snake.getHead().getY()>snake.getPieces().get(1).getY()&&
+//        snake.getPieces().get(2).getX()>snake.getPieces().get(1).getX()
+//    ){snake.getPieces().get(1).setImage(SnakePiece.UPLEFT);
+//    }
+//
+//
+//    for (int i=2;i<snake.getPieces().size()-1;i++){
+//    if (snake.getPieces().get(i).getY()<snake.getPieces().get(i-1).getY()&&
+//        snake.getPieces().get(i).getX()>snake.getPieces().get(i+1).getX()
+//    ){
+//        snake.getPieces().get(i).setImage(SnakePiece.UPLEFT);
+//    }
+//
+//      else if (snake.getPieces().get(i).getY()>snake.getPieces().get(i-1).getY()&&
+//          snake.getPieces().get(i).getX()<snake.getPieces().get(i+1).getX()
+//      ){
+//        snake.getPieces().get(i).setImage(SnakePiece.DOWNRIGHT);
+//      }
+//
+//      else if (snake.getPieces().get(i).getY()<snake.getPieces().get(i-1).getY()&&
+//          snake.getPieces().get(i).getX()<snake.getPieces().get(i+1).getX()
+//      ){
+//        snake.getPieces().get(i).setImage(SnakePiece.UPRIGHT);
+//      }
+//
+//      else if (snake.getPieces().get(i).getY()>snake.getPieces().get(i-1).getY()&&
+//          snake.getPieces().get(i).getX()>snake.getPieces().get(i+1).getX()
+//      ){
+//        snake.getPieces().get(i).setImage(SnakePiece.DOWNLEFT);
+//      }
+//  }}
 
   public Apple getApple() {
     return (Apple) gameObjects.get(0);
