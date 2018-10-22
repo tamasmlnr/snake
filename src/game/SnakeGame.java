@@ -4,7 +4,6 @@ import domain.*;
 import gui.Board;
 
 import javax.sound.sampled.*;
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +78,14 @@ public class SnakeGame {
   }
 
   private void checkIfSnakeCollides() {
-    if (snake.getHead().getX() > MAX_HEIGHT ||
-        snake.getHead().getX()<1||
-        snake.getHead().getY()<1||
-        snake.getHead().getY() > MAX_WIDTH) {
+    if (snake.getHead()
+        .getX() > MAX_HEIGHT ||
+        snake.getHead()
+            .getX() < 1 ||
+        snake.getHead()
+            .getY() < 1 ||
+        snake.getHead()
+            .getY() > MAX_WIDTH) {
       gameOver();
     }
     for (int i = 1; i < snake.getPieces()
@@ -106,9 +109,8 @@ public class SnakeGame {
       grow();
       apple.setX(generateRandomCoordinate());
       apple.setY(generateRandomCoordinate());
-      if (Board.delay > 10) {
-        Board.delay -= 200;
-        System.out.println(Board.delay);
+      if (Board.delay > 100) {
+        Board.delay -= 25;
       }
     }
   }
@@ -142,6 +144,8 @@ public class SnakeGame {
               .getX(), snake.getLastPiece()
               .getY() - 1));
     }
+
+
   }
 
   public void moveLeft() {

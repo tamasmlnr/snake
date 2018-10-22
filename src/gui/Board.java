@@ -18,11 +18,13 @@ public class Board extends JComponent implements KeyListener {
   private SnakeGame snakeGame;
   private List<Piece> pieces = new ArrayList();
   public static Integer delay = 1000;
+  public static Integer tempDelay = 1000;
+  private Timer timer;
 
   public Board() {
     snakeGame = new SnakeGame();
     pieces = snakeGame.getGameObjects();
-    setPreferredSize(new Dimension(SnakeGame.MAX_WIDTH*50, SnakeGame.MAX_HEIGHT*50));
+    setPreferredSize(new Dimension(SnakeGame.MAX_WIDTH * 50, SnakeGame.MAX_HEIGHT * 50));
     setVisible(true);
     contineInDirection();
   }
@@ -67,6 +69,7 @@ public class Board extends JComponent implements KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
+    timer.cancel();
     if (e.getKeyCode() == KeyEvent.VK_UP) {
       snakeGame.turnUp();
     } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -77,6 +80,9 @@ public class Board extends JComponent implements KeyListener {
       snakeGame.turnRight();
     }
     repaint();
+
+    contineInDirection();
+
   }
 
   public void contineInDirection() {
@@ -88,5 +94,11 @@ public class Board extends JComponent implements KeyListener {
         repaint();
       }
     }, 0, delay);
+    timer = t;
   }
+
+  public void cancelTimer() {
+    timer.cancel();
+  }
+
 }
