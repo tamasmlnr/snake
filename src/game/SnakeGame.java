@@ -1,8 +1,11 @@
 package game;
 
 import domain.*;
+import gui.Board;
 
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -10,17 +13,19 @@ import java.util.concurrent.ThreadLocalRandom;
 import static domain.Direction.*;
 
 public class SnakeGame {
-  public static final int MAX_WIDTH = 10;
-  public static final int MAX_HEIGHT = 10;
+  public static final int MAX_WIDTH = 20;
+  public static final int MAX_HEIGHT = 20;
   private Snake snake;
   private List<Piece> gameObjects;
   private Apple apple;
+  public Boolean isAlive;
 
   public SnakeGame() {
+    isAlive = true;
     snake = new Snake();
-    apple=new Apple(generateRandomCoordinate(), generateRandomCoordinate());
+    apple = new Apple(generateRandomCoordinate(), generateRandomCoordinate());
   }
-  
+
   public List<Piece> getGameObjects() {
     List<Piece> pieces = new ArrayList<>();
     pieces.add(apple);
@@ -61,17 +66,53 @@ public class SnakeGame {
   }
 
   public void continueInDirection() {
-    Direction direction = snake.getDirection();
-    if (direction == RIGHT) moveRight();
-    if (direction == LEFT) moveLeft();
-    if (direction == UP) moveUp();
-    if (direction == DOWN) moveDown();
+    if (isAlive) {
+      Direction direction = snake.getDirection();
+      if (direction == RIGHT) moveRight();
+      if (direction == LEFT) moveLeft();
+      if (direction == UP) moveUp();
+      if (direction == DOWN) moveDown();
 
-    if (getApple().runsInto(snake.getHead())) {
-      grow();
-      System.out.println("should grow");
+      checkIfSnakeEatsApple();
+      checkIfSnakeCollides();
     }
   }
+
+  private void checkIfSnakeCollides() {
+    if (snake.getHead().getX() > MAX_HEIGHT ||
+        snake.getHead().getX()<1||
+        snake.getHead().getY()<1||
+        snake.getHead().getY() > MAX_WIDTH) {
+      gameOver();
+    }
+    for (int i = 1; i < snake.getPieces()
+        .size(); i++) {
+      if (snake.getHead()
+          .runsInto(snake.getPieces()
+              .get(i))) {
+        gameOver();
+      }
+    }
+  }
+
+  private void gameOver() {
+    File file = new File("src/assets/aww.wav");
+    play(file);
+    isAlive = false;
+  }
+
+  private void checkIfSnakeEatsApple() {
+    if (getApple().runsInto(snake.getHead())) {
+      grow();
+      apple.setX(generateRandomCoordinate());
+      apple.setY(generateRandomCoordinate());
+      if (Board.delay > 10) {
+        Board.delay -= 200;
+        System.out.println(Board.delay);
+      }
+    }
+  }
+
 
   private void grow() {
     if (snake.getDirection() == LEFT) {
@@ -92,17 +133,14 @@ public class SnakeGame {
       snake.getPieces()
           .add(new SnakePiece(snake.getLastPiece()
               .getX(), snake.getLastPiece()
-              .getY() - 1));
+              .getY() + 1));
     }
 
     if (snake.getDirection() == DOWN) {
       snake.getPieces()
           .add(new SnakePiece(snake.getLastPiece()
-              .getX() - 1, snake.getLastPiece()
-              .getY() + 1));
-      for (SnakePiece piece : snake.getPieces()){
-        System.out.println(piece.getX()+" "+piece.getY());
-      }
+              .getX(), snake.getLastPiece()
+              .getY() - 1));
     }
   }
 
@@ -163,4 +201,25 @@ public class SnakeGame {
   public Apple getApple() {
     return (Apple) gameObjects.get(0);
   }
+
+
+  public void play(File file) {
+    try {
+      final Clip clip = (Clip) AudioSystem.getLine(new Line.Info(Clip.class));
+
+      clip.addLineListener(new LineListener() {
+        @Override
+        public void update(LineEvent event) {
+          if (event.getType() == LineEvent.Type.STOP)
+            clip.close();
+        }
+      });
+
+      clip.open(AudioSystem.getAudioInputStream(file));
+      clip.start();
+    } catch (Exception exc) {
+      exc.printStackTrace(System.out);
+    }
+  }
+
 }

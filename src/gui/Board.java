@@ -17,11 +17,12 @@ public class Board extends JComponent implements KeyListener {
 
   private SnakeGame snakeGame;
   private List<Piece> pieces = new ArrayList();
+  public static Integer delay = 1000;
 
   public Board() {
     snakeGame = new SnakeGame();
     pieces = snakeGame.getGameObjects();
-    setPreferredSize(new Dimension(500, 500));
+    setPreferredSize(new Dimension(SnakeGame.MAX_WIDTH*50, SnakeGame.MAX_HEIGHT*50));
     setVisible(true);
     contineInDirection();
   }
@@ -32,11 +33,13 @@ public class Board extends JComponent implements KeyListener {
     super.paint(graphics);
     for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
-      graphics.drawString("" + pieces.indexOf(piece), (piece.getX() + 1) * 50, (piece.getY() + 1) * 50);
       image.draw(graphics);
+      if (!snakeGame.isAlive) {
+        PositionedImage gO = new PositionedImage("src/gui/gameover.png", 4, 9);
+        gO.draw(graphics);
+      }
       refreshPieces();
     }
-
   }
 
   public void refreshPieces() {
@@ -84,6 +87,6 @@ public class Board extends JComponent implements KeyListener {
         snakeGame.continueInDirection();
         repaint();
       }
-    }, 0, 1000);
+    }, 0, delay);
   }
 }
