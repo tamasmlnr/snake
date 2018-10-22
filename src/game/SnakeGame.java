@@ -45,23 +45,29 @@ public class SnakeGame {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != DOWN)
       snake.setDirection(UP);
+    snake.getHead().setImage(SnakePiece.HEADUP);
   }
 
   public void turnDown() {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != UP)
       snake.setDirection(DOWN);
+    snake.getHead().setImage(SnakePiece.HEADDOWN);
   }
 
   public void turnLeft() {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != RIGHT)
       snake.setDirection(LEFT);
+
+    snake.getHead().setImage(SnakePiece.HEADLEFT);
   }
 
   public void turnRight() {
     snake.setOriginalDirection(snake.getDirection());
     snake.setDirection(RIGHT);
+
+    snake.getHead().setImage(SnakePiece.HEADRIGHT);
   }
 
   public void continueInDirection() {
@@ -193,6 +199,8 @@ public class SnakeGame {
   public void shiftPieces() {
     for (int i = snake.getPieces()
         .size() - 1; i > 0; i--) {
+      int tempX=snake.getPieces().get(i).getX();
+      int tempY=snake.getPieces().get(i).getY();
       snake.getPieces()
           .get(i)
           .setX(snake.getPieces()
