@@ -107,10 +107,15 @@ public class SnakeGame {
   private void checkIfSnakeEatsApple() {
     if (getApple().runsInto(snake.getHead())) {
       grow();
-      apple.setX(generateRandomCoordinate());
-      apple.setY(generateRandomCoordinate());
-      if (Board.delay > 100) {
-        Board.delay -= 25;
+      for(SnakePiece piece: snake.getPieces()){
+        while (apple.runsInto(piece)){
+          apple.setX(generateRandomCoordinate());
+          apple.setY(generateRandomCoordinate());
+          break;
+        }
+      }
+      if (Board.delay > 81) {
+        Board.delay -= 30;
       }
     }
   }

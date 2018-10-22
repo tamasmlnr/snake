@@ -17,8 +17,8 @@ public class Board extends JComponent implements KeyListener {
 
   private SnakeGame snakeGame;
   private List<Piece> pieces = new ArrayList();
-  public static Integer delay = 1000;
-  public static Integer tempDelay = 1000;
+  public static Integer delay = 800;
+  public static Integer tempDelay = 800;
   private Timer timer;
 
   public Board() {
@@ -64,12 +64,10 @@ public class Board extends JComponent implements KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-    timer.cancel();
     if (e.getKeyCode() == KeyEvent.VK_UP) {
       snakeGame.turnUp();
     } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -80,21 +78,23 @@ public class Board extends JComponent implements KeyListener {
       snakeGame.turnRight();
     }
     repaint();
-
-    contineInDirection();
-
+    if (tempDelay > delay) {
+      timer.cancel();
+      contineInDirection();
+    }
   }
 
   public void contineInDirection() {
     java.util.Timer t = new Timer();
+    timer = t;
     t.schedule(new TimerTask() {
       @Override
       public void run() {
         snakeGame.continueInDirection();
         repaint();
       }
-    }, 0, delay);
-    timer = t;
+    }, delay, delay);
+    tempDelay=delay;
   }
 
   public void cancelTimer() {
