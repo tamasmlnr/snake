@@ -23,6 +23,7 @@ public class SnakeGame {
     isAlive = true;
     snake = new Snake();
     apple = new Apple(generateRandomCoordinate(), generateRandomCoordinate());
+    snake.getHead().setImage(SnakePiece.HEADRIGHT);
   }
 
   public List<Piece> getGameObjects() {
@@ -37,7 +38,7 @@ public class SnakeGame {
 
   public static int generateRandomCoordinate() {
     return ThreadLocalRandom.current()
-        .nextInt(2, 10 + 1);
+        .nextInt(2, MAX_HEIGHT + 1);
   }
 
 
@@ -45,14 +46,15 @@ public class SnakeGame {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != DOWN)
       snake.setDirection(UP);
-//    snake.getHead().setImage(SnakePiece.HEADUP);
+    snake.getHead().setImage(SnakePiece.HEADUP);
   }
 
   public void turnDown() {
     snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != UP)
       snake.setDirection(DOWN);
-//    snake.getHead().setImage(SnakePiece.HEADDOWN);
+    snake.getHead()
+        .setImage(SnakePiece.HEADDOWN);
   }
 
   public void turnLeft() {
@@ -60,14 +62,16 @@ public class SnakeGame {
     if (snake.getDirection() != RIGHT)
       snake.setDirection(LEFT);
 
-//    snake.getHead().setImage(SnakePiece.HEADLEFT);
+    snake.getHead()
+        .setImage(SnakePiece.HEADLEFT);
   }
 
   public void turnRight() {
     snake.setOriginalDirection(snake.getDirection());
     snake.setDirection(RIGHT);
 
-//    snake.getHead().setImage(SnakePiece.HEADRIGHT);
+    snake.getHead()
+        .setImage(SnakePiece.HEADRIGHT);
   }
 
   public void continueInDirection() {
@@ -113,15 +117,15 @@ public class SnakeGame {
   private void checkIfSnakeEatsApple() {
     if (getApple().runsInto(snake.getHead())) {
       grow();
-      for(SnakePiece piece: snake.getPieces()){
-        while (apple.runsInto(piece)){
+      for (SnakePiece piece : snake.getPieces()) {
+        while (apple.runsInto(piece)) {
           apple.setX(generateRandomCoordinate());
           apple.setY(generateRandomCoordinate());
           break;
         }
       }
       if (Board.delay > 81) {
-        Board.delay -= 30;
+        Board.delay -= 20;
       }
     }
   }
@@ -197,8 +201,12 @@ public class SnakeGame {
   public void shiftPieces() {
     for (int i = snake.getPieces()
         .size() - 1; i > 0; i--) {
-      int tempX=snake.getPieces().get(i).getX();
-      int tempY=snake.getPieces().get(i).getY();
+      int tempX = snake.getPieces()
+          .get(i)
+          .getX();
+      int tempY = snake.getPieces()
+          .get(i)
+          .getY();
       snake.getPieces()
           .get(i)
           .setX(snake.getPieces()
@@ -209,52 +217,8 @@ public class SnakeGame {
           .setY(snake.getPieces()
               .get(i - 1)
               .getY());
-//    if (snake.getPieces().get(i).getX()!=tempX){
-//      snake.getPieces().get(i).setImage(SnakePiece.BODYHORIZONTAL);
-//    }
-//    if (snake.getPieces().get(i).getY()!=tempY){
-//        snake.getPieces().get(i).setImage(SnakePiece.BODYVERTICAL);
-//      }changeCorners();
-      }
-
+    }
   }
-
-//  private void changeCorners() {
-//    System.out.println("head" +snake.getPieces().get(0).getY()+" "+snake.getPieces().get(0).getX());
-//    System.out.println("first" +snake.getPieces().get(1).getY()+" "+snake.getPieces().get(1).getX());
-//    System.out.println("second" +snake.getPieces().get(2).getY()+" "+snake.getPieces().get(2).getX());
-//    System.out.println("____");
-//    if (snake.getHead().getY()>snake.getPieces().get(1).getY()&&
-//        snake.getPieces().get(2).getX()>snake.getPieces().get(1).getX()
-//    ){snake.getPieces().get(1).setImage(SnakePiece.UPLEFT);
-//    }
-//
-//
-//    for (int i=2;i<snake.getPieces().size()-1;i++){
-//    if (snake.getPieces().get(i).getY()<snake.getPieces().get(i-1).getY()&&
-//        snake.getPieces().get(i).getX()>snake.getPieces().get(i+1).getX()
-//    ){
-//        snake.getPieces().get(i).setImage(SnakePiece.UPLEFT);
-//    }
-//
-//      else if (snake.getPieces().get(i).getY()>snake.getPieces().get(i-1).getY()&&
-//          snake.getPieces().get(i).getX()<snake.getPieces().get(i+1).getX()
-//      ){
-//        snake.getPieces().get(i).setImage(SnakePiece.DOWNRIGHT);
-//      }
-//
-//      else if (snake.getPieces().get(i).getY()<snake.getPieces().get(i-1).getY()&&
-//          snake.getPieces().get(i).getX()<snake.getPieces().get(i+1).getX()
-//      ){
-//        snake.getPieces().get(i).setImage(SnakePiece.UPRIGHT);
-//      }
-//
-//      else if (snake.getPieces().get(i).getY()>snake.getPieces().get(i-1).getY()&&
-//          snake.getPieces().get(i).getX()>snake.getPieces().get(i+1).getX()
-//      ){
-//        snake.getPieces().get(i).setImage(SnakePiece.DOWNLEFT);
-//      }
-//  }}
 
   public Apple getApple() {
     return (Apple) gameObjects.get(0);

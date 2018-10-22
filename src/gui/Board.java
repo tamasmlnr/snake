@@ -16,8 +16,8 @@ public class Board extends JComponent implements KeyListener {
 
   private SnakeGame snakeGame;
   private List<Piece> pieces = new ArrayList();
-  public static Integer delay = 800;
-  public static Integer tempDelay = 800;
+  public static Integer delay = 600;
+  public static Integer tempDelay = 600;
   private Timer timer;
 
   public Board() {
@@ -32,13 +32,20 @@ public class Board extends JComponent implements KeyListener {
   @Override
   public void paint(Graphics graphics) {
     super.paint(graphics);
+    for(int i=0;i<=5;i++){
+      for (int j=0;j<=5;j++){
+        PositionedImage tile = new PositionedImage("src/gui/map.png", i*5, j*5);
+        tile.draw(graphics);
+      }
+    }
     for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
       if (!snakeGame.isAlive) {
-        PositionedImage gO = new PositionedImage("src/gui/gameover.png", 4, 9);
+        PositionedImage gO = new PositionedImage("src/gui/gameover.png", 1, 6);
         gO.draw(graphics);
       }
+
       refreshPieces();
 
     }
