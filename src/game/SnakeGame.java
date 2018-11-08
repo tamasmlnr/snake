@@ -19,12 +19,25 @@ public class SnakeGame {
   private Apple apple;
   public Boolean isAlive;
   private int score;
+  private int totalTurns;
+  private Bomb bomb;
 
   public SnakeGame() {
     isAlive = true;
     snake = new Snake();
     apple = new Apple(generateRandomCoordinate(), generateRandomCoordinate());
-    snake.getHead().setImage(SnakePiece.HEADRIGHT);
+    snake.getHead()
+        .setImage(SnakePiece.HEADRIGHT);
+    bomb = new Bomb(MAX_HEIGHT * 50 + 100, MAX_HEIGHT * 50 + 100);
+  }
+
+  private void triggerTimedEvents() {
+  totalTurns++;
+  if (totalTurns%20==0&&totalTurns!=0){
+    bomb.setY(generateRandomCoordinate());
+    bomb.setX(generateRandomCoordinate());
+  }
+
   }
 
   public List<Piece> getGameObjects() {
@@ -33,6 +46,7 @@ public class SnakeGame {
     for (SnakePiece piece : snake.getPieces()) {
       pieces.add(piece);
     }
+    pieces.add(bomb);
     gameObjects = pieces;
     return pieces;
   }
@@ -45,35 +59,40 @@ public class SnakeGame {
 
   public void turnUp() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != DOWN){
+    if (snake.getDirection() != DOWN) {
       snake.setDirection(UP);
-    snake.getHead().setImage(SnakePiece.HEADUP);}
+      snake.getHead()
+          .setImage(SnakePiece.HEADUP);
+    }
   }
 
   public void turnDown() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != UP){
+    if (snake.getDirection() != UP) {
       snake.setDirection(DOWN);
-    snake.getHead()
-        .setImage(SnakePiece.HEADDOWN);}
+      snake.getHead()
+          .setImage(SnakePiece.HEADDOWN);
+    }
   }
 
   public void turnLeft() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != RIGHT){
+    if (snake.getDirection() != RIGHT) {
       snake.setDirection(LEFT);
 
-    snake.getHead()
-        .setImage(SnakePiece.HEADLEFT);}
+      snake.getHead()
+          .setImage(SnakePiece.HEADLEFT);
+    }
   }
 
   public void turnRight() {
     snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != LEFT){
-    snake.setDirection(RIGHT);
+    if (snake.getDirection() != LEFT) {
+      snake.setDirection(RIGHT);
 
-    snake.getHead()
-        .setImage(SnakePiece.HEADRIGHT);}
+      snake.getHead()
+          .setImage(SnakePiece.HEADRIGHT);
+    }
   }
 
   public void continueInDirection() {
@@ -86,6 +105,7 @@ public class SnakeGame {
 
       checkIfSnakeEatsApple();
       checkIfSnakeCollides();
+      triggerTimedEvents();
     }
   }
 
@@ -108,6 +128,7 @@ public class SnakeGame {
         gameOver();
       }
     }
+
   }
 
   private void gameOver() {
@@ -119,7 +140,7 @@ public class SnakeGame {
   private void checkIfSnakeEatsApple() {
     if (getApple().runsInto(snake.getHead())) {
       grow();
-      score+=10;
+      score += 10;
       for (SnakePiece piece : snake.getPieces()) {
         while (apple.runsInto(piece)) {
           apple.setX(generateRandomCoordinate());
