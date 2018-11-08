@@ -19,8 +19,8 @@ public class SnakeGame {
   private Apple apple;
   public Boolean isAlive;
   private int score;
-  private int totalTurns;
-  private Bomb bomb;
+  public static int totalTurns;
+  private List<Bomb> bombs;
 
   public SnakeGame() {
     isAlive = true;
@@ -28,15 +28,14 @@ public class SnakeGame {
     apple = new Apple(generateRandomCoordinate(), generateRandomCoordinate());
     snake.getHead()
         .setImage(SnakePiece.HEADRIGHT);
-    bomb = new Bomb(MAX_HEIGHT * 50 + 100, MAX_HEIGHT * 50 + 100);
+    bombs = new ArrayList<>();
   }
 
   private void triggerTimedEvents() {
   totalTurns++;
-  if (totalTurns%20==0&&totalTurns!=0){
-    bomb.setY(generateRandomCoordinate());
-    bomb.setX(generateRandomCoordinate());
-  }
+    if (totalTurns%50==0){
+      bombs.add(new Bomb(generateRandomCoordinate(),generateRandomCoordinate()));
+    }
 
   }
 
@@ -46,7 +45,9 @@ public class SnakeGame {
     for (SnakePiece piece : snake.getPieces()) {
       pieces.add(piece);
     }
-    pieces.add(bomb);
+    for (Bomb bomb:bombs){
+      pieces.add(bomb);
+    }
     gameObjects = pieces;
     return pieces;
   }
@@ -135,6 +136,9 @@ public class SnakeGame {
     File file = new File("src/assets/aww.wav");
     play(file);
     isAlive = false;
+    for (Bomb bomb: bombs){
+      bomb.explode();
+    }
   }
 
   private void checkIfSnakeEatsApple() {
