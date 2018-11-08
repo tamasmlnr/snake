@@ -38,7 +38,7 @@ public class Board extends JComponent implements KeyListener {
         tile.draw(graphics);
       }
     }
-    for (Piece piece : pieces) {
+   for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
       if (!snakeGame.isAlive) {

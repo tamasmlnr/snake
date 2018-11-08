@@ -18,6 +18,7 @@ public class SnakeGame {
   private List<Piece> gameObjects;
   private Apple apple;
   public Boolean isAlive;
+  private int score;
 
   public SnakeGame() {
     isAlive = true;
@@ -118,6 +119,7 @@ public class SnakeGame {
   private void checkIfSnakeEatsApple() {
     if (getApple().runsInto(snake.getHead())) {
       grow();
+      score+=10;
       for (SnakePiece piece : snake.getPieces()) {
         while (apple.runsInto(piece)) {
           apple.setX(generateRandomCoordinate());
@@ -245,4 +247,11 @@ public class SnakeGame {
     }
   }
 
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
 }
