@@ -38,7 +38,12 @@ public class Board extends JComponent implements KeyListener {
         tile.draw(graphics);
       }
     }
-   for (Piece piece : pieces) {
+    graphics.setColor(Color.BLACK);
+    graphics.fillRect(0,SnakeGame.MAX_HEIGHT*50-30,100,30);
+    graphics.setColor(Color.WHITE);
+    graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+    graphics.drawString("Score: "+String.valueOf(snakeGame.getScore()), 0, (SnakeGame.MAX_WIDTH)*50-10);
+    for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
       if (!snakeGame.isAlive) {
