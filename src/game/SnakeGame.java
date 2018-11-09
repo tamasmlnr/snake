@@ -32,11 +32,10 @@ public class SnakeGame {
   }
 
   private void triggerTimedEvents() {
-  totalTurns++;
-    if (totalTurns%50==0){
-      bombs.add(new Bomb(generateRandomCoordinate(),generateRandomCoordinate()));
+    totalTurns++;
+    if (totalTurns % 50 == 0) {
+      bombs.add(new Bomb(generateRandomCoordinate(), generateRandomCoordinate()));
     }
-
   }
 
   public List<Piece> getGameObjects() {
@@ -45,7 +44,7 @@ public class SnakeGame {
     for (SnakePiece piece : snake.getPieces()) {
       pieces.add(piece);
     }
-    for (Bomb bomb:bombs){
+    for (Bomb bomb : bombs) {
       pieces.add(bomb);
     }
     gameObjects = pieces;
@@ -128,15 +127,28 @@ public class SnakeGame {
               .get(i))) {
         gameOver();
       }
+      if (collidesWithBomb()) {
+        gameOver();
+      }
     }
 
+  }
+
+  private boolean collidesWithBomb() {
+    for (Bomb bomb : bombs) {
+      if (snake.getHead()
+          .runsInto(bomb)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void gameOver() {
     File file = new File("src/assets/aww.wav");
     play(file);
     isAlive = false;
-    for (Bomb bomb: bombs){
+    for (Bomb bomb : bombs) {
       bomb.explode();
     }
   }

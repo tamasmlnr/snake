@@ -95,7 +95,6 @@ public class Board extends JComponent implements KeyListener {
     }
   }
 
-
   public void buttonPressed(String button) {
     if (button.equals("down")) {
       snakeGame.turnDown();
