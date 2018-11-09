@@ -30,7 +30,7 @@ public class SnakeGame {
     snake.getHead()
         .setImage(SnakePiece.HEADRIGHT);
     bombs = new ArrayList<>();
-    fly = new Fly(generateRandomCoordinate(),generateRandomCoordinate());
+    fly = new Fly(((MAX_WIDTH+1)*50),((MAX_HEIGHT+1)*50));
   }
 
   private void triggerTimedEvents() {
@@ -38,7 +38,7 @@ public class SnakeGame {
     if (totalTurns % 50 == 0 && bombs.size() < 20) {
       bombs.add(new Bomb(generateRandomCoordinate(), generateRandomCoordinate()));
     }
-    if (totalTurns%100==0) {
+    if (totalTurns%100==0&&totalTurns!=0) {
       spawnFly();
     }
     if(totalTurns%110==0){
@@ -140,7 +140,20 @@ public class SnakeGame {
       if (collidesWithBomb()) {
         gameOver();
       }
+      if (collidesWithFly()){
+        fly.setX((MAX_WIDTH+1)*50);
+        fly.setY((MAX_HEIGHT+1)*50);
+        score+=100;
+      }
     }
+  }
+
+  private boolean collidesWithFly() {
+  if (fly.getX()==snake.getHead().getX()&&
+        fly.getY()==snake.getHead().getY()){
+    return true;
+  }
+  return false;
   }
 
   private boolean collidesWithBomb() {
