@@ -21,6 +21,7 @@ public class SnakeGame {
   private int score;
   public static int totalTurns;
   private List<Bomb> bombs;
+  private Fly fly;
 
   public SnakeGame() {
     isAlive = true;
@@ -29,12 +30,20 @@ public class SnakeGame {
     snake.getHead()
         .setImage(SnakePiece.HEADRIGHT);
     bombs = new ArrayList<>();
+    fly = new Fly(generateRandomCoordinate(),generateRandomCoordinate());
   }
 
   private void triggerTimedEvents() {
     totalTurns++;
-    if (totalTurns % 50 == 0) {
+    if (totalTurns % 50 == 0 && bombs.size() < 20) {
       bombs.add(new Bomb(generateRandomCoordinate(), generateRandomCoordinate()));
+    }
+    if (totalTurns%100==0) {
+      spawnFly();
+    }
+    if(totalTurns%110==0){
+      fly.setX((MAX_WIDTH+1)*50);
+      fly.setY((MAX_HEIGHT+1)*50);
     }
   }
 
@@ -47,6 +56,7 @@ public class SnakeGame {
     for (Bomb bomb : bombs) {
       pieces.add(bomb);
     }
+    pieces.add(fly);
     gameObjects = pieces;
     return pieces;
   }
@@ -131,7 +141,6 @@ public class SnakeGame {
         gameOver();
       }
     }
-
   }
 
   private boolean collidesWithBomb() {
@@ -199,6 +208,11 @@ public class SnakeGame {
               .getX(), snake.getLastPiece()
               .getY() - 1));
     }
+  }
+
+  private void spawnFly() {
+    fly.setX(generateRandomCoordinate());
+    fly.setY(generateRandomCoordinate());
   }
 
   public void moveLeft() {
