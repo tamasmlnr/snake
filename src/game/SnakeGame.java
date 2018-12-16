@@ -26,17 +26,17 @@ public class SnakeGame {
   public SnakeGame() {
     isAlive = true;
     snake = new Snake();
-    apple = new Apple(generateRandomCoordinate(), generateRandomCoordinate());
+    apple = new Apple(generateRandomCoordinate());
     snake.getHead()
         .setImage(SnakePiece.HEADRIGHT);
     bombs = new ArrayList<>();
-    fly = new Fly(((MAX_WIDTH+1)*50),((MAX_HEIGHT+1)*50));
+    fly = new Fly((new Coordinate((MAX_WIDTH+1)*50,((MAX_HEIGHT+1)*50))));
   }
 
   private void triggerTimedEvents() {
     totalTurns++;
     if (totalTurns % 50 == 0 && bombs.size() < 20) {
-      bombs.add(new Bomb(generateRandomCoordinate(), generateRandomCoordinate()));
+      bombs.add(new Bomb(generateRandomCoordinate()));
     }
     if (totalTurns%100==0&&totalTurns!=0) {
       spawnFly();
@@ -61,9 +61,11 @@ public class SnakeGame {
     return pieces;
   }
 
-  public static int generateRandomCoordinate() {
-    return ThreadLocalRandom.current()
-        .nextInt(2, MAX_HEIGHT + 1);
+  public static Coordinate generateRandomCoordinate() {
+    return new Coordinate(ThreadLocalRandom.current()
+        .nextInt(2, MAX_HEIGHT + 1),
+        ThreadLocalRandom.current()
+            .nextInt(2, MAX_HEIGHT + 1));
   }
 
 
@@ -181,8 +183,7 @@ public class SnakeGame {
       score += 10;
       for (SnakePiece piece : snake.getPieces()) {
         while (apple.runsInto(piece)) {
-          apple.setX(generateRandomCoordinate());
-          apple.setY(generateRandomCoordinate());
+          apple.setCoordinate(generateRandomCoordinate());
           break;
         }
       }
@@ -196,36 +197,35 @@ public class SnakeGame {
   private void grow() {
     if (snake.getDirection() == LEFT) {
       snake.getPieces()
-          .add(new SnakePiece(snake.getLastPiece()
+          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
               .getX() + 1, snake.getLastPiece()
-              .getY()));
+              .getY())));
     }
 
     if (snake.getDirection() == RIGHT) {
       snake.getPieces()
-          .add(new SnakePiece(snake.getLastPiece()
+          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
               .getX() - 1, snake.getLastPiece()
-              .getY()));
+              .getY())));
     }
 
     if (snake.getDirection() == UP) {
       snake.getPieces()
-          .add(new SnakePiece(snake.getLastPiece()
+          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
               .getX(), snake.getLastPiece()
-              .getY() + 1));
+              .getY() + 1)));
     }
 
     if (snake.getDirection() == DOWN) {
       snake.getPieces()
-          .add(new SnakePiece(snake.getLastPiece()
+          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
               .getX(), snake.getLastPiece()
-              .getY() - 1));
+              .getY() - 1)));
     }
   }
 
   private void spawnFly() {
-    fly.setX(generateRandomCoordinate());
-    fly.setY(generateRandomCoordinate());
+    fly.setCoordinate(generateRandomCoordinate());
   }
 
   public void moveLeft() {

@@ -13,10 +13,10 @@ public class Snake {
   public Snake() {
     this.direction = RIGHT;
     pieces = new ArrayList<>();
-    pieces.add(new SnakePiece(4, 1));
-    pieces.add(new SnakePiece(3, 1));
-    pieces.add(new SnakePiece(2, 1));
-    pieces.add(new SnakePiece(1, 1));
+    pieces.add(new SnakePiece(new Coordinate(4, 1)));
+    pieces.add(new SnakePiece(new Coordinate(3, 1)));
+    pieces.add(new SnakePiece(new Coordinate(2, 1)));
+    pieces.add(new SnakePiece(new Coordinate(1, 1)));
   }
 
   public Direction getOriginalDirection() {

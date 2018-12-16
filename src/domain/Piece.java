@@ -44,4 +44,11 @@ public class Piece {
     this.image = image;
   }
 
+  public Coordinate getCoordinate() {
+    return coordinate;
+  }
+
+  public void setCoordinate(Coordinate coordinate) {
+    this.coordinate = coordinate;
+  }
 }
