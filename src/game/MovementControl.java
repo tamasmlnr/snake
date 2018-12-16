@@ -36,7 +36,6 @@ public class MovementControl {
   }
 
   public void turnUp() {
-    snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != DOWN) {
       snake.setDirection(UP);
       snake.getHead()
@@ -45,7 +44,6 @@ public class MovementControl {
   }
 
   public void turnDown() {
-    snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != UP) {
       snake.setDirection(DOWN);
       snake.getHead()
@@ -54,7 +52,6 @@ public class MovementControl {
   }
 
   public void turnLeft() {
-    snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != RIGHT) {
       snake.setDirection(LEFT);
 
@@ -64,7 +61,6 @@ public class MovementControl {
   }
 
   public void turnRight() {
-    snake.setOriginalDirection(snake.getDirection());
     if (snake.getDirection() != LEFT) {
       snake.setDirection(RIGHT);
 

@@ -7,7 +7,6 @@ import static domain.Direction.RIGHT;
 
 public class Snake {
   private Direction direction;
-  private Direction originalDirection;
   private List<SnakePiece> pieces;
 
   public Snake() {
@@ -17,10 +16,6 @@ public class Snake {
     pieces.add(new SnakePiece(new Coordinate(3, 1)));
     pieces.add(new SnakePiece(new Coordinate(2, 1)));
     pieces.add(new SnakePiece(new Coordinate(1, 1)));
-  }
-
-  public void setOriginalDirection(Direction originalDirection) {
-    this.originalDirection = originalDirection;
   }
 
   public Direction getDirection() {

@@ -38,8 +38,8 @@ public class GameLogic {
     snake = new Snake();
     snake.getHead()
         .setImage(SnakePiece.HEADRIGHT);
-    fly = new Fly((new Coordinate((MAX_WIDTH + 1) * 50, ((MAX_HEIGHT + 1) * 50))));
-    apple = new Apple(new Coordinate(10, 10));
+    fly = new Fly((MAX_WIDTH + 1) * 50, ((MAX_HEIGHT + 1) * 50));
+    apple = new Apple(10, 10);
   }
 
   private int readHighScore() {
@@ -199,30 +199,30 @@ public class GameLogic {
   private void grow() {
     if (snake.getDirection() == LEFT) {
       snake.getPieces()
-          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
+          .add(new SnakePiece(snake.getLastPiece()
               .getX() + 1, snake.getLastPiece()
-              .getY())));
+              .getY()));
     }
 
     if (snake.getDirection() == RIGHT) {
       snake.getPieces()
-          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
+          .add(new SnakePiece(snake.getLastPiece()
               .getX() - 1, snake.getLastPiece()
-              .getY())));
+              .getY()));
     }
 
     if (snake.getDirection() == UP) {
       snake.getPieces()
-          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
+          .add(new SnakePiece(snake.getLastPiece()
               .getX(), snake.getLastPiece()
-              .getY() + 1)));
+              .getY() + 1));
     }
 
     if (snake.getDirection() == DOWN) {
       snake.getPieces()
-          .add(new SnakePiece(new Coordinate(snake.getLastPiece()
+          .add(new SnakePiece(snake.getLastPiece()
               .getX(), snake.getLastPiece()
-              .getY() - 1)));
+              .getY() - 1));
     }
   }
 

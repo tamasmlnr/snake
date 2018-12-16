@@ -12,4 +12,10 @@ public class SnakePiece extends Piece {
     super(coordinate);
     setImage(BODY);
   }
+
+  public SnakePiece(int x, int y) {
+    super(x, y);
+    setImage(BODY);
+  }
+
 }

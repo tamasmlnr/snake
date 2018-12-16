@@ -9,6 +9,10 @@ public class Piece {
     this.coordinate=coordinate;
   }
 
+  public Piece(int x, int y){
+    this.coordinate= new Coordinate(x,y);
+    }
+
   public int getX() {
     return coordinate.getX();
   }
