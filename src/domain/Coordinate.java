@@ -9,9 +9,6 @@ public class Coordinate {
     this.y = y;
   }
 
-  public Coordinate() {
-  }
-
   public int getX() {
     return x;
   }

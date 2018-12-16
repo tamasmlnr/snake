@@ -19,10 +19,6 @@ public class Snake {
     pieces.add(new SnakePiece(new Coordinate(1, 1)));
   }
 
-  public Direction getOriginalDirection() {
-    return originalDirection;
-  }
-
   public void setOriginalDirection(Direction originalDirection) {
     this.originalDirection = originalDirection;
   }

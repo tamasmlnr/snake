@@ -1,7 +1,5 @@
 package domain;
 
-import game.SnakeGame;
-
 public class Bomb extends Piece {
   private int age;
   private String imagePath;

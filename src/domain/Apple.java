@@ -2,9 +2,6 @@ package domain;
 
 public class Apple extends Piece {
 
-  private Coordinate coordinate;
-  private String image;
-
   public Apple(Coordinate coordinate) {
     super(coordinate);
   }
