@@ -22,16 +22,15 @@ public class GameLogic {
   public static int totalTurns;
   private List<Bomb> bombs;
   private Fly fly;
-  private MovementControl movementControl;
 
   public GameLogic() {
+    bombs = new ArrayList<>();
     isAlive = true;
     snake = new Snake();
-    apple = new Apple(generateRandomCoordinate());
     snake.getHead()
         .setImage(SnakePiece.HEADRIGHT);
-    bombs = new ArrayList<>();
-    fly = new Fly((new Coordinate((MAX_WIDTH+1)*50,((MAX_HEIGHT+1)*50))));
+    fly = new Fly((new Coordinate((MAX_WIDTH + 1) * 50, ((MAX_HEIGHT + 1) * 50))));
+    apple = new Apple(new Coordinate(10, 10));
   }
 
   void triggerTimedEvents() {
@@ -39,12 +38,12 @@ public class GameLogic {
     if (totalTurns % 50 == 0 && bombs.size() < 20) {
       bombs.add(new Bomb(generateRandomCoordinate()));
     }
-    if (totalTurns%100==0&&totalTurns!=0) {
+    if (totalTurns % 100 == 0 && totalTurns != 0) {
       spawnFly();
     }
-    if(totalTurns%110==0){
-      fly.setX((MAX_WIDTH+1)*50);
-      fly.setY((MAX_HEIGHT+1)*50);
+    if (totalTurns % 110 == 0) {
+      fly.setX((MAX_WIDTH + 1) * 50);
+      fly.setY((MAX_HEIGHT + 1) * 50);
     }
   }
 
@@ -62,14 +61,31 @@ public class GameLogic {
     return pieces;
   }
 
-  public static Coordinate generateRandomCoordinate() {
-    return new Coordinate(ThreadLocalRandom.current()
+  public Coordinate generateRandomCoordinate() {
+    Coordinate newCoordinate = new Coordinate(ThreadLocalRandom.current()
         .nextInt(2, MAX_HEIGHT + 1),
         ThreadLocalRandom.current()
             .nextInt(2, MAX_HEIGHT + 1));
+    return checkIfCoordinateIsTaken(newCoordinate);
   }
 
-  void checkIfSnakeCollides() {
+  private Coordinate checkIfCoordinateIsTaken(Coordinate newCoordinate) {
+    for (Coordinate coordinate : getAllTakenCoordinates()) {
+      if (coordinate.getX() == newCoordinate.getX() && coordinate.getY() == newCoordinate.getY()) {
+        return generateRandomCoordinate();
+      }
+    }
+    return newCoordinate;
+  }
+
+  public List<Coordinate> getAllTakenCoordinates() {
+    List<Coordinate> allCoordinates = new ArrayList<>();
+    getGameObjects().stream()
+        .forEach(piece -> allCoordinates.add(piece.getCoordinate()));
+    return allCoordinates;
+  }
+
+  public void checkIfSnakeCollides() {
     if (snake.getHead()
         .getX() > MAX_HEIGHT ||
         snake.getHead()
@@ -90,20 +106,22 @@ public class GameLogic {
       if (collidesWithBomb()) {
         gameOver();
       }
-      if (collidesWithFly()){
-        fly.setX((MAX_WIDTH+1)*50);
-        fly.setY((MAX_HEIGHT+1)*50);
-        score+=100;
+      if (collidesWithFly()) {
+        fly.setX((MAX_WIDTH + 1) * 50);
+        fly.setY((MAX_HEIGHT + 1) * 50);
+        score += 100;
       }
     }
   }
 
   private boolean collidesWithFly() {
-  if (fly.getX()==snake.getHead().getX()&&
-        fly.getY()==snake.getHead().getY()){
-    return true;
-  }
-  return false;
+    if (fly.getX() == snake.getHead()
+        .getX() &&
+        fly.getY() == snake.getHead()
+            .getY()) {
+      return true;
+    }
+    return false;
   }
 
   private boolean collidesWithBomb() {

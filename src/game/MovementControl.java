@@ -15,8 +15,8 @@ public class MovementControl {
   private GameLogic gameLogic;
 
   public MovementControl(GameLogic gameLogic) {
-    this.gameLogic=gameLogic;
-    this.snake=gameLogic.getSnake();
+    this.gameLogic = gameLogic;
+    this.snake = gameLogic.getSnake();
   }
 
   public void shiftPieces() {
@@ -100,7 +100,6 @@ public class MovementControl {
             .getX() + 1);
   }
 
-
   public void moveDown() {
     shiftPieces();
     snake.getPieces()
@@ -123,6 +122,4 @@ public class MovementControl {
       gameLogic.triggerTimedEvents();
     }
   }
-
-
 }
