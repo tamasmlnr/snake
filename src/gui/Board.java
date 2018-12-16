@@ -28,7 +28,7 @@ public class Board extends JComponent implements KeyListener {
     setPreferredSize(new Dimension(GameLogic.MAX_WIDTH * 50, GameLogic.MAX_HEIGHT * 50));
     setVisible(true);
     contineInDirection();
-    movementControl=new MovementControl(gameLogic.getSnake());
+    movementControl=new MovementControl(gameLogic);
   }
 
 
@@ -125,7 +125,7 @@ public class Board extends JComponent implements KeyListener {
     t.schedule(new TimerTask() {
       @Override
       public void run() {
-        gameLogic.continueInDirection();
+        movementControl.continueInDirection();
         repaint();
       }
     }, delay, delay);

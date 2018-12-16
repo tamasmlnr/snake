@@ -17,7 +17,7 @@ public class GameLogic {
   private Snake snake;
   private List<Piece> gameObjects;
   private Apple apple;
-  public Boolean isAlive;
+  public static Boolean isAlive;
   private int score;
   public static int totalTurns;
   private List<Bomb> bombs;
@@ -34,7 +34,7 @@ public class GameLogic {
     fly = new Fly((new Coordinate((MAX_WIDTH+1)*50,((MAX_HEIGHT+1)*50))));
   }
 
-  private void triggerTimedEvents() {
+  void triggerTimedEvents() {
     totalTurns++;
     if (totalTurns % 50 == 0 && bombs.size() < 20) {
       bombs.add(new Bomb(generateRandomCoordinate()));
@@ -69,21 +69,7 @@ public class GameLogic {
             .nextInt(2, MAX_HEIGHT + 1));
   }
 
-  public void continueInDirection() {
-    if (isAlive) {
-      Direction direction = snake.getDirection();
-      if (direction == RIGHT) moveRight();
-      if (direction == LEFT) moveLeft();
-      if (direction == UP) moveUp();
-      if (direction == DOWN) moveDown();
-
-      checkIfSnakeEatsApple();
-      checkIfSnakeCollides();
-      triggerTimedEvents();
-    }
-  }
-
-  private void checkIfSnakeCollides() {
+  void checkIfSnakeCollides() {
     if (snake.getHead()
         .getX() > MAX_HEIGHT ||
         snake.getHead()
@@ -139,7 +125,7 @@ public class GameLogic {
     }
   }
 
-  private void checkIfSnakeEatsApple() {
+  void checkIfSnakeEatsApple() {
     if (getApple().runsInto(snake.getHead())) {
       grow();
       score += 10;
@@ -188,59 +174,6 @@ public class GameLogic {
 
   private void spawnFly() {
     fly.setCoordinate(generateRandomCoordinate());
-  }
-
-  public void moveLeft() {
-    shiftPieces();
-    snake.getPieces()
-        .get(0)
-        .setX(snake.getPieces()
-            .get(0)
-            .getX() - 1);
-  }
-
-  public void moveUp() {
-    shiftPieces();
-    snake.getPieces()
-        .get(0)
-        .setY(snake.getPieces()
-            .get(0)
-            .getY() - 1);
-  }
-
-  public void moveRight() {
-    shiftPieces();
-    snake.getPieces()
-        .get(0)
-        .setX(snake.getPieces()
-            .get(0)
-            .getX() + 1);
-  }
-
-
-  public void moveDown() {
-    shiftPieces();
-    snake.getPieces()
-        .get(0)
-        .setY(snake.getPieces()
-            .get(0)
-            .getY() + 1);
-  }
-
-  public void shiftPieces() {
-    for (int i = snake.getPieces()
-        .size() - 1; i > 0; i--) {
-      snake.getPieces()
-          .get(i)
-          .setX(snake.getPieces()
-              .get(i - 1)
-              .getX());
-      snake.getPieces()
-          .get(i)
-          .setY(snake.getPieces()
-              .get(i - 1)
-              .getY());
-    }
   }
 
   public Apple getApple() {
