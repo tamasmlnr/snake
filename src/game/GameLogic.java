@@ -27,12 +27,15 @@ public class GameLogic {
   private Apple apple;
   public static Boolean isAlive;
   private int score;
-  private int highscore=readHighScore();
+  private int originalHighScore;
+  private int highscore;
   public static int totalTurns;
   private List<Bomb> bombs;
   private Fly fly;
 
   public GameLogic() {
+    highscore = readHighScore();
+    originalHighScore = highscore;
     bombs = new ArrayList<>();
     isAlive = true;
     snake = new Snake();
@@ -46,11 +49,11 @@ public class GameLogic {
     Path file = Paths.get("highscore.txt");
     File f = new File("highscore.txt");
     if (f.exists() && !f.isDirectory()) {
-            try {
+      try {
         List<String> lines = Files.readAllLines(file);
-                     if (lines != null && lines.size() >= 0) {
+        if (lines != null && lines.size() >= 0) {
           return Integer.parseInt(lines.get(0));
-         }
+        }
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -120,7 +123,9 @@ public class GameLogic {
         snake.getHead()
             .getY() > MAX_WIDTH) {
       gameOver();
-      saveHighScore(score);
+      if (highscore > originalHighScore) {
+        saveHighScore(score);
+      }
     }
     for (int i = 1; i < snake.getPieces()
         .size(); i++) {
