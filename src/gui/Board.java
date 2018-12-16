@@ -46,6 +46,11 @@ public class Board extends JComponent implements KeyListener {
     graphics.setColor(Color.WHITE);
     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
     graphics.drawString("Score: "+String.valueOf(gameLogic.getScore()), 0, (GameLogic.MAX_WIDTH)*50-10);
+    graphics.setColor(Color.BLACK);
+    graphics.fillRect(GameLogic.MAX_WIDTH*50-150, GameLogic.MAX_HEIGHT*50-30,150,30);
+    graphics.setColor(Color.WHITE);
+    graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+    graphics.drawString("Highscore: "+String.valueOf(gameLogic.getHighscore()), GameLogic.MAX_WIDTH*50-150, (GameLogic.MAX_WIDTH)*50-10);
     for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
