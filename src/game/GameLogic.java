@@ -5,7 +5,15 @@ import gui.Board;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -95,6 +103,7 @@ public class GameLogic {
         snake.getHead()
             .getY() > MAX_WIDTH) {
       gameOver();
+      saveHighScore(score);
     }
     for (int i = 1; i < snake.getPieces()
         .size(); i++) {
@@ -111,6 +120,16 @@ public class GameLogic {
         fly.setY((MAX_HEIGHT + 1) * 50);
         score += 100;
       }
+    }
+  }
+
+  private void saveHighScore(int score)  {
+    List<String> lines = Arrays.asList(""+score);
+    Path file = Paths.get("the-file-name.txt");
+    try {
+      Files.write(file, lines, Charset.forName("UTF-8"));
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
