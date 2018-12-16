@@ -5,8 +5,8 @@ import game.SnakeGame;
 public class Bomb extends Piece {
   private int age;
   private String imagePath;
-  public Bomb(int x, int y) {
-    super(x, y);
+  public Bomb(Coordinate coordinate) {
+    super(coordinate);
     this.imagePath="src/gui/bomb.png";
   }
   @Override

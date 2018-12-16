@@ -2,40 +2,38 @@ package domain;
 
 public class Piece {
 
-  private int x;
-  private int y;
+  private Coordinate coordinate;
   private String image;
 
-  public Piece(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public Piece(Coordinate coordinate) {
+    this.coordinate=coordinate;
   }
 
   public int getX() {
-    return x;
+    return coordinate.getX();
   }
 
   public void setX(int x) {
-    this.x = x;
+    coordinate.setX(x);
   }
 
   public int getY() {
-    return y;
+    return coordinate.getY();
   }
 
   public void setY(int y) {
-    this.y = y;
+    coordinate.setY(y);
   }
 
   public boolean runsInto(Piece piece) {
-    if (piece.getX() == this.x && piece.getY() == this.y) {
+    if (piece.getX() == this.getX() && piece.getY() == this.getY()) {
       return true;
     }
     return false;
   }
 
   public String toString() {
-    return "(" + x + "," + y + ")";
+    return "(" + getX() + "," + getY() + ")";
   }
 
   public String getImage() {

@@ -1,20 +1,12 @@
 package domain;
 
-import game.SnakeGame;
-import gui.PositionedImage;
-
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-
 public class Apple extends Piece {
 
-  private int x;
-  private int y;
+  private Coordinate coordinate;
   private String image;
 
-  public Apple(int x, int y) {
-    super(x, y);
+  public Apple(Coordinate coordinate) {
+    super(coordinate);
   }
 
   @Override
