@@ -1,7 +1,8 @@
 package gui;
 
 import domain.Piece;
-import game.SnakeGame;
+import game.GameLogic;
+import game.MovementControl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +15,20 @@ import java.util.TimerTask;
 
 public class Board extends JComponent implements KeyListener {
 
-  private SnakeGame snakeGame;
+  private GameLogic gameLogic;
   private List<Piece> pieces = new ArrayList();
   public static Integer delay = 600;
   public static Integer tempDelay = 600;
   private Timer timer;
+  private MovementControl movementControl;
 
   public Board() {
-    snakeGame = new SnakeGame();
-    pieces = snakeGame.getGameObjects();
-    setPreferredSize(new Dimension(SnakeGame.MAX_WIDTH * 50, SnakeGame.MAX_HEIGHT * 50));
+    gameLogic = new GameLogic();
+    pieces = gameLogic.getGameObjects();
+    setPreferredSize(new Dimension(GameLogic.MAX_WIDTH * 50, GameLogic.MAX_HEIGHT * 50));
     setVisible(true);
     contineInDirection();
+    movementControl=new MovementControl(gameLogic.getSnake());
   }
 
 
@@ -39,14 +42,14 @@ public class Board extends JComponent implements KeyListener {
       }
     }
     graphics.setColor(Color.BLACK);
-    graphics.fillRect(0,SnakeGame.MAX_HEIGHT*50-30,100,30);
+    graphics.fillRect(0, GameLogic.MAX_HEIGHT*50-30,100,30);
     graphics.setColor(Color.WHITE);
     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-    graphics.drawString("Score: "+String.valueOf(snakeGame.getScore()), 0, (SnakeGame.MAX_WIDTH)*50-10);
+    graphics.drawString("Score: "+String.valueOf(gameLogic.getScore()), 0, (GameLogic.MAX_WIDTH)*50-10);
     for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
-      if (!snakeGame.isAlive) {
+      if (!gameLogic.isAlive) {
         PositionedImage gO = new PositionedImage("src/gui/gameover.png", 1, 6);
         gO.draw(graphics);
       }
@@ -57,7 +60,7 @@ public class Board extends JComponent implements KeyListener {
   }
 
   public void refreshPieces() {
-    pieces = snakeGame.getGameObjects();
+    pieces = gameLogic.getGameObjects();
   }
 
   public static void main(String[] args) {
@@ -80,13 +83,13 @@ public class Board extends JComponent implements KeyListener {
   @Override
   public void keyReleased(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_UP) {
-      snakeGame.turnUp();
+      movementControl.turnUp();
     } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-      snakeGame.turnDown();
+      movementControl.turnDown();
     } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-      snakeGame.turnLeft();
+      movementControl.turnLeft();
     } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-      snakeGame.turnRight();
+      movementControl.turnRight();
     }
     repaint();
     if (tempDelay > delay) {
@@ -97,16 +100,16 @@ public class Board extends JComponent implements KeyListener {
 
   public void buttonPressed(String button) {
     if (button.equals("down")) {
-      snakeGame.turnDown();
+      movementControl.turnDown();
     }
     else if (button.equals("up")) {
-      snakeGame.turnUp();
+      movementControl.turnUp();
     }
     else if (button.equals("left")) {
-      snakeGame.turnLeft();
+      movementControl.turnLeft();
     }
     else if (button.equals("right")) {
-      snakeGame.turnRight();
+      movementControl.turnRight();
     }
     repaint();
     if (tempDelay > delay) {
@@ -122,7 +125,7 @@ public class Board extends JComponent implements KeyListener {
     t.schedule(new TimerTask() {
       @Override
       public void run() {
-        snakeGame.continueInDirection();
+        gameLogic.continueInDirection();
         repaint();
       }
     }, delay, delay);

@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static domain.Direction.*;
 
-public class SnakeGame {
+public class GameLogic {
   public static final int MAX_WIDTH = 15;
   public static final int MAX_HEIGHT = 15;
   private Snake snake;
@@ -22,8 +22,9 @@ public class SnakeGame {
   public static int totalTurns;
   private List<Bomb> bombs;
   private Fly fly;
+  private MovementControl movementControl;
 
-  public SnakeGame() {
+  public GameLogic() {
     isAlive = true;
     snake = new Snake();
     apple = new Apple(generateRandomCoordinate());
@@ -66,45 +67,6 @@ public class SnakeGame {
         .nextInt(2, MAX_HEIGHT + 1),
         ThreadLocalRandom.current()
             .nextInt(2, MAX_HEIGHT + 1));
-  }
-
-
-  public void turnUp() {
-    snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != DOWN) {
-      snake.setDirection(UP);
-      snake.getHead()
-          .setImage(SnakePiece.HEADUP);
-    }
-  }
-
-  public void turnDown() {
-    snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != UP) {
-      snake.setDirection(DOWN);
-      snake.getHead()
-          .setImage(SnakePiece.HEADDOWN);
-    }
-  }
-
-  public void turnLeft() {
-    snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != RIGHT) {
-      snake.setDirection(LEFT);
-
-      snake.getHead()
-          .setImage(SnakePiece.HEADLEFT);
-    }
-  }
-
-  public void turnRight() {
-    snake.setOriginalDirection(snake.getDirection());
-    if (snake.getDirection() != LEFT) {
-      snake.setDirection(RIGHT);
-
-      snake.getHead()
-          .setImage(SnakePiece.HEADRIGHT);
-    }
   }
 
   public void continueInDirection() {
@@ -307,5 +269,9 @@ public class SnakeGame {
 
   public int getScore() {
     return score;
+  }
+
+  public Snake getSnake() {
+    return snake;
   }
 }
