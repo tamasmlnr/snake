@@ -268,12 +268,6 @@ public class SnakeGame {
   public void shiftPieces() {
     for (int i = snake.getPieces()
         .size() - 1; i > 0; i--) {
-      int tempX = snake.getPieces()
-          .get(i)
-          .getX();
-      int tempY = snake.getPieces()
-          .get(i)
-          .getY();
       snake.getPieces()
           .get(i)
           .setX(snake.getPieces()
@@ -313,9 +307,5 @@ public class SnakeGame {
 
   public int getScore() {
     return score;
-  }
-
-  public void setScore(int score) {
-    this.score = score;
   }
 }
