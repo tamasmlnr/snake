@@ -49,9 +49,8 @@ public class GameLogic {
             try {
         List<String> lines = Files.readAllLines(file);
                      if (lines != null && lines.size() >= 0) {
-          highscore = Integer.parseInt(lines.get(0));
-          System.out.println("aa"+highscore);
-        }
+          return Integer.parseInt(lines.get(0));
+         }
       } catch (IOException e) {
         e.printStackTrace();
       }

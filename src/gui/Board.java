@@ -28,29 +28,29 @@ public class Board extends JComponent implements KeyListener {
     setPreferredSize(new Dimension(GameLogic.MAX_WIDTH * 50, GameLogic.MAX_HEIGHT * 50));
     setVisible(true);
     contineInDirection();
-    movementControl=new MovementControl(gameLogic);
+    movementControl = new MovementControl(gameLogic);
   }
 
 
   @Override
   public void paint(Graphics graphics) {
     super.paint(graphics);
-    for(int i=0;i<=5;i++){
-      for (int j=0;j<=5;j++){
-        PositionedImage tile = new PositionedImage("src/gui/map.png", i*5, j*5);
+    for (int i = 0; i <= 5; i++) {
+      for (int j = 0; j <= 5; j++) {
+        PositionedImage tile = new PositionedImage("src/gui/map.png", i * 5, j * 5);
         tile.draw(graphics);
       }
     }
     graphics.setColor(Color.BLACK);
-    graphics.fillRect(0, GameLogic.MAX_HEIGHT*50-30,100,30);
+    graphics.fillRect(0, GameLogic.MAX_HEIGHT * 50 - 30, 100, 30);
     graphics.setColor(Color.WHITE);
     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-    graphics.drawString("Score: "+String.valueOf(gameLogic.getScore()), 0, (GameLogic.MAX_WIDTH)*50-10);
+    graphics.drawString("Score: " + String.valueOf(gameLogic.getScore()), 0, (GameLogic.MAX_WIDTH) * 50 - 10);
     graphics.setColor(Color.BLACK);
-    graphics.fillRect(GameLogic.MAX_WIDTH*50-150, GameLogic.MAX_HEIGHT*50-30,150,30);
+    graphics.fillRect(GameLogic.MAX_WIDTH * 50 - 180, GameLogic.MAX_HEIGHT * 50 - 30, 180, 30);
     graphics.setColor(Color.WHITE);
     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-    graphics.drawString("Highscore: "+String.valueOf(gameLogic.getHighscore()), GameLogic.MAX_WIDTH*50-150, (GameLogic.MAX_WIDTH)*50-10);
+    graphics.drawString("Highscore: " + String.valueOf(gameLogic.getHighscore()), GameLogic.MAX_WIDTH * 50 - 180, (GameLogic.MAX_WIDTH) * 50 - 10);
     for (Piece piece : pieces) {
       PositionedImage image = new PositionedImage(piece.getImage(), piece.getX(), piece.getY());
       image.draw(graphics);
@@ -106,14 +106,11 @@ public class Board extends JComponent implements KeyListener {
   public void buttonPressed(String button) {
     if (button.equals("down")) {
       movementControl.turnDown();
-    }
-    else if (button.equals("up")) {
+    } else if (button.equals("up")) {
       movementControl.turnUp();
-    }
-    else if (button.equals("left")) {
+    } else if (button.equals("left")) {
       movementControl.turnLeft();
-    }
-    else if (button.equals("right")) {
+    } else if (button.equals("right")) {
       movementControl.turnRight();
     }
     repaint();
