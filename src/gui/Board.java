@@ -134,8 +134,4 @@ public class Board extends JComponent implements KeyListener {
     tempDelay = delay;
   }
 
-  public void cancelTimer() {
-    timer.cancel();
-  }
-
 }
