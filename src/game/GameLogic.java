@@ -67,7 +67,7 @@ public class GameLogic {
     if (totalTurns % 100 == 0 && totalTurns != 0) {
       spawnFly();
     }
-    if (totalTurns % 110 == 0) {
+    if (totalTurns % 115 == 0) {
       fly.setX((MAX_WIDTH + 1) * 50);
       fly.setY((MAX_HEIGHT + 1) * 50);
     }
