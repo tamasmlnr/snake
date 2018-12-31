@@ -121,9 +121,6 @@ public class GameLogic {
         snake.getHead()
             .getY() > MAX_WIDTH) {
       gameOver();
-      if (highscore > originalHighScore) {
-        saveHighScore(score);
-      }
     }
     for (int i = 1; i < snake.getPieces()
         .size(); i++) {
@@ -179,6 +176,9 @@ public class GameLogic {
     isAlive = false;
     for (Bomb bomb : bombs) {
       bomb.explode();
+    }
+    if (highscore > originalHighScore) {
+      saveHighScore(score);
     }
   }
 
