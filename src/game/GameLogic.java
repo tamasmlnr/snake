@@ -171,14 +171,17 @@ public class GameLogic {
   }
 
   private void gameOver() {
+    System.out.println(highscore);
+    System.out.println(originalHighScore);
+    System.out.println(score);
+    if (score > originalHighScore) {
+      saveHighScore(score);
+    }
     File file = new File("src/assets/aww.wav");
     play(file);
     isAlive = false;
     for (Bomb bomb : bombs) {
       bomb.explode();
-    }
-    if (highscore > originalHighScore) {
-      saveHighScore(score);
     }
   }
 
