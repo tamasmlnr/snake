@@ -171,9 +171,6 @@ public class GameLogic {
   }
 
   private void gameOver() {
-    System.out.println(highscore);
-    System.out.println(originalHighScore);
-    System.out.println(score);
     if (score > originalHighScore) {
       saveHighScore(score);
     }

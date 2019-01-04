@@ -54,7 +54,6 @@ public class MovementControl {
   public void turnLeft() {
     if (snake.getDirection() != RIGHT) {
       snake.setDirection(LEFT);
-
       snake.getHead()
           .setImage(SnakePiece.HEADLEFT);
     }
@@ -63,7 +62,6 @@ public class MovementControl {
   public void turnRight() {
     if (snake.getDirection() != LEFT) {
       snake.setDirection(RIGHT);
-
       snake.getHead()
           .setImage(SnakePiece.HEADRIGHT);
     }

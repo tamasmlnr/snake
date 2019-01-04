@@ -27,7 +27,7 @@ public class Board extends JComponent implements KeyListener {
     pieces = gameLogic.getGameObjects();
     setPreferredSize(new Dimension(GameLogic.MAX_WIDTH * 50, GameLogic.MAX_HEIGHT * 50));
     setVisible(true);
-    contineInDirection();
+    restartTimer();
     movementControl = new MovementControl(gameLogic);
   }
 
@@ -96,10 +96,9 @@ public class Board extends JComponent implements KeyListener {
     } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
       movementControl.turnRight();
     }
-    repaint();
     if (tempDelay > delay) {
       timer.cancel();
-      contineInDirection();
+      restartTimer();
     }
   }
 
@@ -113,15 +112,15 @@ public class Board extends JComponent implements KeyListener {
     } else if (button.equals("right")) {
       movementControl.turnRight();
     }
-    repaint();
     if (tempDelay > delay) {
       timer.cancel();
-      contineInDirection();
+      restartTimer();
     }
   }
 
 
-  public void contineInDirection() {
+  public void restartTimer() {
+    tempDelay = delay;
     java.util.Timer t = new Timer();
     timer = t;
     t.schedule(new TimerTask() {
@@ -131,7 +130,6 @@ public class Board extends JComponent implements KeyListener {
         repaint();
       }
     }, delay, delay);
-    tempDelay = delay;
   }
 
 }
