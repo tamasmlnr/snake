@@ -10,4 +10,4 @@ A tile-based classic Snake game.
 -Avoid bombs, walls and yourself
 -Try to beat the highscore!  
 
-![gameplay](https://lh6.googleusercontent.com/d6KjgjkIQTv7HrgRhbEp2ivm4rwR3pcon2i04pPvwIl0l-Fiaiq6s1R0-ZKfmilHcU42jcPF3G26nA=w1920-h952)
+![gameplay](https://github.com/tamasmlnr/snake/blob/master/snake.gif)
